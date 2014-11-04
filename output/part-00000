@@ -1,0 +1,10 @@
+TftpClient	86686
+TftpServerHandler	24139
+emulation	9126
+epmapper	167949
+ftpctrl	436
+ftpd	1396
+ftpdata	366
+httpd	877879
+remoteshell	1255
+smbd	6652916
