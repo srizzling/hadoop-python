@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- EXTERNAL LIBS-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="https://www.google.com/jsapi"></script>
+
+		<!-- EXAMPLE SCRIPT -->
+		<script>
+		
+			// onload callback
+			function drawChart() {
+				$.ajax({
+					url: "data.json",
+					dataType:"json",
+					async: false ,
+					success: function(data) {
+						console.log('geodata');
+
+						var g_data = new google.visualization.DataTable();
+          					g_data.addColumn('date', 'Time');
+          					g_data.addColumn('number', 'events');
+          			
+						for(var i=0;i<data.length;i++){
+        						var obj = data[i];
+        						g_data.addRow([new Date(obj.date), Number(obj.count)]);
+    						}
+
+          					var chart = new google.visualization.LineChart($('#chart').get(0));
+
+						chart.draw(g_data, {
+							title: 'Paris Honeypot Data event timeline'
+						});
+					}
+				});
+			}
+
+			// load chart lib
+			google.load('visualization', '1', {
+				packages: ['corechart']
+			});
+
+			// call drawChart once google charts is loaded
+			google.setOnLoadCallback(drawChart);
+
+		</script>
+
+	</head>
+	<body>
+		<div id="chart" style="width: 100%;"></div>
+	</body>
+</html>

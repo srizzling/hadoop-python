@@ -18,5 +18,7 @@ echo "=====Moving Output======"
 hadoop fs -get $output $output
 
 echo "=====Creating Graph======"
-cat $output/part-00000 | python dataToJson.py > data.txt
-mv data.txt "/u/students/venkatsrir/public_html"
+cat $output/part-00000 | python dataToJson.py > data.json
+mv data.json "/u/students/venkatsrir/public_html" && chmod 777 "/u/students/venkatsrir/public_html"
+firefox "http://homepages.ecs.vuw.ac.nz/~venkatsrir"
+
