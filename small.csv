@@ -1,0 +1,3 @@
+select connection_timestamp, connection_protocol from Connections LIMIT 10;
+
+
