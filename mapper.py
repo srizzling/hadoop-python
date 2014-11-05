@@ -11,4 +11,4 @@ for line in sys.stdin:
     ts = float(words[0])
     word = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
 
-    print '%s\t%s:%s' % (word, 1, words[1])
+    print '%s\t%s' % (word, 1)

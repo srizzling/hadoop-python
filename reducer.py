@@ -6,7 +6,6 @@ import sys
 
 current_word = None
 current_count = 0
-current_protocol= None
 word = None
 
 # input comes from STDIN
@@ -15,9 +14,7 @@ for line in sys.stdin:
     line = line.strip()
 
     # parse the input we got from mapper.py
-    word, count_string = line.split('\t', 1)
-
-    count, protocol = count_string.split(":");
+    word, count = line.split('\t', 1)
 
     # convert count (currently a string) to int
     try:
@@ -29,16 +26,15 @@ for line in sys.stdin:
 
     # this IF-switch only works because Hadoop sorts map output
     # by key (here: word) before it is passed to the reducer
-    if current_word == word and current_protocol == protocol:
+    if current_word == word:
         current_count += count
     else:
-        if current_word and current_protocol:
+        if current_word:
             # write result to 
-            print '%s\t%s:%s' % (current_word, current_count, current_protocol)
+            print '%s\t%s' % (current_word, current_count)
         current_count = count
         current_word = word
-        current_protocol = protocol
 
     # do not forget to output the last word if needed!
-if current_word == word and current_protocol == protocol:
-    print '%s\t%s:%s' % (current_word, current_count, current_protocol)
+if current_word == word:
+    print '%s\t%s' % (current_word, current_count)
