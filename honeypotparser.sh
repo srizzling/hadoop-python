@@ -1,6 +1,6 @@
 #!/bin/bash
 
-input=honeypot/c2.csv
+input=honeypot/medium.csv
 output=output
 
 hadoop fs -rmr $output
