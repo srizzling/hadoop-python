@@ -16,30 +16,41 @@
 					dataType:"json",
 					async: false ,
 					success: function(data) {
-						console.log('geodata');
+						console.log(data[0].date);
+
+						
 
 						var g_data = new google.visualization.DataTable();
-          					g_data.addColumn('datetime', 'Time');
-          					g_data.addColumn('number', 'events');
+          							g_data.addColumn('string', 'Day');
+          							g_data.addColumn('number', 'events');
           			
 						for(var i=0;i<data.length;i++){
         						var obj = data[i];
-        						g_data.addRow([new Date(obj.date), Number(obj.count)]);
+        						var array = obj.date.split(" ");
+        						var date = array[0];
+        						var hour = array[1];
+
+        						g_data.addRow([date, Number(obj.count)]);
     						}
 
-          					var chart = new google.visualization.LineChart($('#chart').get(0));
 
-						chart.draw(g_data, {
-							title: 'Paris Honeypot Data event timeline'
-						});
+    						var options = {
+          chart: {
+            title: 'Number of Events Per Day over 1 Week Period',
+          },
+          bars: 'horizontal' // Required for Material Bar Charts.
+        };
+
+          					var chart = new google.charts.Bar($('#chart').get(0));
+
+						chart.draw(g_data, options);
 					}
 				});
 			}
 
 			// load chart lib
-			google.load('visualization', '1', {
-				packages: ['corechart']
-			});
+			google.load("visualization", "1.1", {packages:["bar"]});
+			google.setOnLoadCallback(drawChart);
 
 			// call drawChart once google charts is loaded
 			google.setOnLoadCallback(drawChart);
